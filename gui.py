@@ -134,7 +134,64 @@ class WinGUI:
         if x < 0 or y < 0:
             return False, x, y
         return True, x, y
+    
+    # 自定义函数
+    
+    def open_browser(self):
+        x,y = self.locate_icon('open_browser.png')
+        self.move_and_click(x,y)
 
+    def chrome_refresh(self):
+        x,y = self.locate_icon('chrome_home.png')
+        self.move_and_click(x,y)
+
+    def chrome_search(self):
+        x,y = self.locate_icon('chrome_search.png')
+        self.move_and_click(x,y)
+
+    def handle_qna3_login(self):
+        x,y = self.locate_icon('qna3_login.png')
+        self.move_and_click(x,y)
+
+    def handle_qna3_login_email(self):
+        x,y = self.locate_icon('qna3_login_email.png')
+        self.move_and_click(x,y)
+    
+    def handle_qna3_input_email(self):
+        x,y = self.locate_icon('qna3_input_email.png')
+        self.move_and_click(x,y)
+        pyautogui.typewrite('qinsc18@163.com')
+
+    def handle_qna3_input_password(self):
+        x,y = self.locate_icon('qna3_input_password.png')
+        self.move_and_click(x,y)
+        pyautogui.typewrite('qinSIchen1994.')
+
+    def handle_qna3_continue(self):
+        x,y = self.locate_icon('qna3_continue.png')
+        self.move_and_click(x,y)
+
+    def handle_qna3_link_wallet(self):
+        x1,y1 = self.locate_icon('qna3_link_wallet.png')
+        self.move_and_click(x1,y1)
+        x2,y2 = self.locate_icon('qna3_link_wallet_click.png')
+        self.move_and_click(x2,y2)
+
+    def handle_close(self):
+        x,y = self.locate_icon('close.png')
+        self.move_and_click(x,y)
+
+    def handle_MetaMask(self):
+        x,y = self.locate_icon('wallet_MetaMask.png')
+        self.move_and_click(x,y)   
+
+    def handle_MetaMask_login(self):
+        x1,y1 = self.locate_icon('wallet_MetaMask_password.png')
+        self.move_and_click(x1,y1)
+        pyautogui.typewrite('qinSIchen1994')
+        x2,y2 = self.locate_icon('wallet_MetaMask_login.png')
+        self.move_and_click(x2,y2)
+   
 
 def get_window_pos(name):
     handle = win32gui.FindWindow(0, name)
@@ -241,9 +298,44 @@ if __name__ == "__main__":
     target_folder = r"C:\Users\Joey\Desktop\data"
     suffix_list = []
 
-    window_name = "window name of your application"
+    window_name = "AdsPower Browser | 5.11.27 | 2.6.8.7"
     # cycle_number = -1 means infinite loop
     cycle_number = -1
     # ------------------------------------
 
-    running_program(window_name, original_folder, target_folder, cycle_number, suffix_list)
+    # running_program(window_name, original_folder, target_folder, cycle_number, suffix_list)
+    app = WinGUI(window_name)
+    app.get_workscreen_screenshot()
+    app.get_app_screenshot()
+    app.open_browser()
+
+    pyautogui.moveTo(x=22,y=10)
+    pyautogui.rightClick()
+    pyautogui.hotkey('w')
+    pyautogui.typewrite('chrome')
+    pyautogui.hotkey('enter')
+
+    chrome = WinGUI('chrome')
+    # chrome.chrome_refresh()
+    chrome.chrome_search()
+    pyautogui.hotkey('delete')
+    url = 'https://qna3.ai/vote'
+    pyautogui.typewrite(url)
+    pyautogui.hotkey('enter')
+
+    # close_count = 2
+    # while(close_count > 0):
+    chrome.handle_close()
+        # close_count = close_count - 1
+    chrome.handle_qna3_login()
+    chrome.handle_qna3_login_email()
+    chrome.handle_qna3_input_email()
+    chrome.handle_qna3_input_password()
+    chrome.handle_qna3_continue()
+    chrome.handle_close()
+    chrome.handle_qna3_link_wallet()
+    chrome.handle_MetaMask()
+
+    metaMask = WinGUI('MetaMask Notification')
+    metaMask.handle_MetaMask_login()
+    metaMask.handle_close()
